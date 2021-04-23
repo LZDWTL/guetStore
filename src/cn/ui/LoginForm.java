@@ -1,6 +1,6 @@
 package cn.ui;
 
-import cn.util.Select;
+import cn.util.JDBC;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -24,11 +24,11 @@ public class LoginForm extends JFrame {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         label1 = new JLabel();
         label2 = new JLabel();
-        textField1 = new JTextField("è“é›ªç‘"); //ç”¨æˆ·å
-        textField2 = new JTextField("123456"); //å¯†ç 
-        button1 = new JButton();  //ç™»é™†æŒ‰é’®
-        button2 = new JButton();  //é‡ç½®æŒ‰é’®
-        Select select = new Select();
+        textField1 = new JTextField("À¶Ñ©Èğ"); //ÓÃ»§Ãû
+        textField2 = new JTextField("123456"); //ÃÜÂë
+        button1 = new JButton();  //µÇÂ½°´Å¥
+        button2 = new JButton();  //ÖØÖÃ°´Å¥
+        JDBC select = new JDBC();
         String username=textField1.getText();
         String password=textField2.getText();
 
@@ -36,11 +36,12 @@ public class LoginForm extends JFrame {
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        select.selectUser(username,password);
-                        //if(select.selectUser(username,password)){
-                            //System.out.println(username+password);
-                            //setVisible(false);
-                        //}
+                        if(select.selectUser(username,password)){
+                            MainForm mainForm=new MainForm();
+                            mainForm.setVisible(true);
+
+                            setVisible(false);
+                        }
                     }
                 }
         );
@@ -78,7 +79,7 @@ public class LoginForm extends JFrame {
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
 
         setVisible(true);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);  //å…³é—­çª—å£çš„æ—¶å€™å…³é—­è¿›ç¨‹
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);  //¹Ø±Õ´°¿ÚµÄÊ±ºò¹Ø±Õ½ø³Ì
 
     }
 
