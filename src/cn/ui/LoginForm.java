@@ -22,13 +22,16 @@ public class LoginForm extends JFrame {
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
+
+        // JFormDesigner - End of component initialization  //GEN-END:initComponents
+
         label1 = new JLabel();
         label2 = new JLabel();
         textField1 = new JTextField("蓝雪瑞"); //用户名
         textField2 = new JTextField("123456"); //密码
         button1 = new JButton();  //登陆按钮
         button2 = new JButton();  //重置按钮
-        JDBC select = new JDBC();
+        JDBC jdbc = new JDBC();
         String username=textField1.getText();
         String password=textField2.getText();
 
@@ -36,7 +39,7 @@ public class LoginForm extends JFrame {
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        if(select.selectUser(username,password)){
+                        if(jdbc.selectUser(username,password)){
                             MainForm mainForm=new MainForm();
                             mainForm.setVisible(true);
 
@@ -76,7 +79,6 @@ public class LoginForm extends JFrame {
         contentPane.setPreferredSize(new Dimension(500, 390));
         pack();
         setLocationRelativeTo(getOwner());
-        // JFormDesigner - End of component initialization  //GEN-END:initComponents
 
         setVisible(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);  //关闭窗口的时候关闭进程

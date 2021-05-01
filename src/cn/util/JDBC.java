@@ -1,40 +1,64 @@
 package cn.util;
 
+import cn.bean.Users;
+
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
+import java.util.ArrayList;
 
 /**
  * @author 10237
  * @date 2021-04-23 20:58
  */
 public class JDBC {
+    java.util.List<Users> list=new ArrayList<Users>();     //½«Êı¾İ×°Èëµ½listÖĞ£¬È»ºó´æ·Åµ½Jtable
+    private String url="jdbc:oracle:thin:@120.77.80.134:1521:orcl"; //2¡¢Á¬½ÓÊı¾İ¿â
+    private Connection conn;
+    private ResultSet rs=null;
+    private Object[][] data=null;
+    private String head[] = {"id", "username", "password"};
+
+    public String[] getHead() {
+        return head;
+    }
+
+    public void setHead(String[] head) {
+        this.head = head;
+    }
+
+    {
+        try {
+            Class.forName("oracle.jdbc.driver.OracleDriver");   //1¡¢´´½¨Çı¶¯
+            conn = DriverManager.getConnection(url,"scott","tiger");  //2¡¢Á¬½ÓÊı¾İ¿â
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
     public Boolean selectUser(String username,String password){
-        Connection conn=null;
-        String url ="jdbc:oracle:thin:@120.77.80.134:1521:orcl";
-        Statement stmt=null;  //SQLè¯­å¥å¯¹è±¡
+        Statement stmt=null;  //3¡¢´´½¨SQLÓï¾ä¶ÔÏó
         String sql="select password from users where username='"+username+"'";
-        ResultSet rs=null;
         try{
-            Class.forName("oracle.jdbc.driver.OracleDriver");
-            conn= DriverManager.getConnection(url,"scott","tiger");
             stmt=conn.createStatement();
-            rs=stmt.executeQuery(sql);  //executeQueryä¼šè¿”å›ä¸€ä¸ªç»“æœé›†
-            //rsæ˜¯ç»“æœé›†ï¼Œåˆç§°ä¸ºæ¸¸æ ‡ï¼Œå°±æ˜¯ä¸€ä¸ªå†…å­˜åŒºï¼ˆç¼“å†²åŒºï¼‰ï¼ŒæŸ¥è¯¢çš„ç»“æœéƒ½åœ¨ç¼“å†²åŒº
-            rs.next();
+            rs=stmt.executeQuery(sql);  //executeQuery»á·µ»ØÒ»¸ö½á¹û¼¯     4¡¢Ö´ĞĞSQLÓï¾ä
+            //rsÊÇ½á¹û¼¯£¬ÓÖ³ÆÎªÓÎ±ê£¬¾ÍÊÇÒ»¸öÄÚ´æÇø£¨»º³åÇø£©£¬²éÑ¯µÄ½á¹û¶¼ÔÚ»º³åÇø
+            rs.next();          //5¡¢´¦Àí½á¹û¼¯
             String encoderPassword=rs.getString(1);
-            Boolean isSuccecc=MD5.checkpassword(password,encoderPassword);  //å‰ä¸€ä¸ªæ•°æ®æ˜¯æ–‡æœ¬æ¡†ä¸­çš„ï¼Œåä¸€ä¸ªæ•°æ®æ˜¯æ•°æ®åº“ä¸­çš„
+            Boolean isSuccecc=MD5.checkpassword(password,encoderPassword);  //Ç°Ò»¸öÊı¾İÊÇÎÄ±¾¿òÖĞµÄ£¬ºóÒ»¸öÊı¾İÊÇÊı¾İ¿âÖĞµÄ
             if(isSuccecc){
+                System.out.println("µÇÂ½³É¹¦!");
                 return true;
             }
             else{
+                System.out.println("µÇÂ½Ê§°Ü!");
                 return false;
             }
-        }catch (ClassNotFoundException | SQLException | NoSuchAlgorithmException | UnsupportedEncodingException e){
+        }catch ( SQLException | NoSuchAlgorithmException | UnsupportedEncodingException e){
             e.printStackTrace();
         } finally{
             try {
-                rs.close();
+                rs.close();              //6¡¢¹Ø±ÕÁ´½Ó£¬ÊÍ·Å×ÊÔ´
                 stmt.close();
                 conn.close();
             } catch (SQLException e) {
@@ -44,4 +68,41 @@ public class JDBC {
         return false;
     }
 
+    public Object[][] selectUserInfo(){
+
+        java.util.List<Users> list=new ArrayList<Users>();
+        Statement statement=null;
+        String sql="select * from users";
+        try {
+            statement=conn.createStatement();
+            rs=statement.executeQuery(sql);
+            while(rs.next()){
+                Users users=new Users();
+                users.setId(rs.getInt(1));
+                users.setUsername(rs.getString(2));
+                users.setPassword(rs.getString(1));
+                list.add(users);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            try {
+                rs.close();  //¹Ø±Õ½á¹û¼¯
+                statement.close();   //¹Ø±ÕSQL¶ÔÏó
+                conn.close();    //¹Ø±ÕÁ¬½Ó
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        data =new Object[list.size()][head.length];
+        for(int i=0;i<list.size();i++){
+            for(int j =0;j<head.length;j++){
+                data[i][0] = list.get(i).getId();
+                data[i][1] = list.get(i).getUsername();
+                data[i][2] = list.get(i).getPassword();
+            }
+        }
+        return data;
+    }
 }

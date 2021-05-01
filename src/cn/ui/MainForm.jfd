@@ -7,17 +7,85 @@ new FormModel {
 			"autoSize": false
 		} ) {
 			name: "this"
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "titleLab"
+				"text": "电子商铺"
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 1, 48, false )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 230
+				"y": 190
+				"width": 315
+				"height": 57
+			} )
 			add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
-				name: "scrollPane1"
-				add( new FormComponent( "javax.swing.JTree" ) {
-					name: "tree1"
+				name: "userinfoscrollPane"
+				add( new FormComponent( "javax.swing.JTable" ) {
+					name: "userinfoTab"
 				} )
 			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
-				"x": 20
-				"y": 15
-				"width": 135
-				"height": 450
+				"x": 115
+				"y": 95
+				"height": 285
+				"width": 575
 			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "unserinfoLab"
+				"text": "用户信息"
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 21, false )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 335
+				"y": 40
+				"width": 165
+				"height": 35
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "flashBut"
+				"text": "刷新"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 145
+				"y": 405
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "addBut"
+				"text": "增加"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 290
+				"y": 405
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "updateBut"
+				"text": "修改"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 440
+				"y": 405
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "delBut"
+				"text": "删除"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 580
+				"y": 405
+			} )
+			menuBar: new FormContainer( "javax.swing.JMenuBar", new FormLayoutManager( class javax.swing.JMenuBar ) ) {
+				name: "menuBar1"
+				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
+					name: "userinfoMenu"
+					"text": "用户信息"
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "retriveuserMenu"
+						"text": "查看用户"
+						addEvent( new FormEvent( "java.awt.event.MouseListener", "mousePressed", "retriveuserMenuMousePressed", true ) )
+					} )
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "updateuserMenu"
+						"text": "修改用户"
+					} )
+				} )
+				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
+					name: "Tools"
+					"text": "Tools"
+				} )
+			}
 		}, new FormLayoutConstraints( null ) {
 			"location": new java.awt.Point( 0, 0 )
 			"size": new java.awt.Dimension( 800, 510 )
