@@ -74,6 +74,11 @@ public class MainForm extends JFrame {
         jdbc.delData(id);
     }
 
+    private void paymenuItemActionPerformed(ActionEvent e) {
+        PayForm payForm=new PayForm();
+        payForm.setVisible(true);
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         menuBar1 = new JMenuBar();
@@ -81,6 +86,7 @@ public class MainForm extends JFrame {
         retriveuserMenu = new JMenuItem();
         updateuserMenu = new JMenuItem();
         Tools = new JMenu();
+        paymenuItem = new JMenuItem();
         panel1 = new JPanel();
         idLabel = new JLabel();
         idtextField = new JTextField();
@@ -129,6 +135,11 @@ public class MainForm extends JFrame {
             //======== Tools ========
             {
                 Tools.setText("Tools");
+
+                //---- paymenuItem ----
+                paymenuItem.setText("\u652f\u4ed8");
+                paymenuItem.addActionListener(e -> paymenuItemActionPerformed(e));
+                Tools.add(paymenuItem);
             }
             menuBar1.add(Tools);
         }
@@ -253,6 +264,7 @@ public class MainForm extends JFrame {
     private JMenuItem retriveuserMenu;
     private JMenuItem updateuserMenu;
     private JMenu Tools;
+    private JMenuItem paymenuItem;
     private JPanel panel1;
     private JLabel idLabel;
     private JTextField idtextField;

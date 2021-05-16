@@ -158,6 +158,11 @@ new FormModel {
 				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
 					name: "Tools"
 					"text": "Tools"
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "paymenuItem"
+						"text": "支付"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "paymenuItemActionPerformed", true ) )
+					} )
 				} )
 			}
 		}, new FormLayoutConstraints( null ) {

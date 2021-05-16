@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * @date 2021-04-23 20:58
  */
 public class JDBC {
-    java.util.List<Users> list = new ArrayList<Users>();     //½«Êı¾İ×°Èëµ½listÖĞ£¬È»ºó´æ·Åµ½Jtable
+    java.util.List<Users> list = new ArrayList<Users>();     //å°†æ•°æ®è£…å…¥åˆ°listä¸­ï¼Œç„¶åå­˜æ”¾åˆ°Jtable
 
     private ResultSet rs = null;
     private Object[][] data = null;
@@ -28,31 +28,34 @@ public class JDBC {
 
 
     public Boolean selectUser(String username, String password) {
-        String url = "jdbc:oracle:thin:@120.77.80.134:1521:orcl"; //2¡¢Á¬½ÓÊı¾İ¿â
+        String url = "jdbc:oracle:thin:@120.77.80.134:1521:orcl"; //2ã€è¿æ¥æ•°æ®åº“
         Connection conn = null;
-        Statement stmt = null;  //3¡¢´´½¨SQLÓï¾ä¶ÔÏó
+        Statement stmt = null;  //3ã€åˆ›å»ºSQLè¯­å¥å¯¹è±¡
         String sql = "select password from users where username='" + username + "'";
         try {
-            Class.forName("oracle.jdbc.driver.OracleDriver");   //1¡¢´´½¨Çı¶¯
-            conn = DriverManager.getConnection(url, "scott", "tiger");  //2¡¢Á¬½ÓÊı¾İ¿â
+            Class.forName("oracle.jdbc.driver.OracleDriver");   //1ã€åˆ›å»ºé©±åŠ¨
+            conn = DriverManager.getConnection(url, "scott", "tiger");  //2ã€è¿æ¥æ•°æ®åº“
             stmt = conn.createStatement();
-            rs = stmt.executeQuery(sql);  //executeQuery»á·µ»ØÒ»¸ö½á¹û¼¯     4¡¢Ö´ĞĞSQLÓï¾ä
-            //rsÊÇ½á¹û¼¯£¬ÓÖ³ÆÎªÓÎ±ê£¬¾ÍÊÇÒ»¸öÄÚ´æÇø£¨»º³åÇø£©£¬²éÑ¯µÄ½á¹û¶¼ÔÚ»º³åÇø
-            rs.next();          //5¡¢´¦Àí½á¹û¼¯
-            String encoderPassword = rs.getString(1);
-            Boolean isSuccecc = MD5.checkpassword(password, encoderPassword);  //Ç°Ò»¸öÊı¾İÊÇÎÄ±¾¿òÖĞµÄ£¬ºóÒ»¸öÊı¾İÊÇÊı¾İ¿âÖĞµÄ
-            if (isSuccecc) {
-                System.out.println("µÇÂ½³É¹¦!");
-                return true;
-            } else {
-                System.out.println("µÇÂ½Ê§°Ü!");
-                return false;
+            rs = stmt.executeQuery(sql);  //executeQueryä¼šè¿”å›ä¸€ä¸ªç»“æœé›†     4ã€æ‰§è¡ŒSQLè¯­å¥
+            //rsæ˜¯ç»“æœé›†ï¼Œåˆç§°ä¸ºæ¸¸æ ‡ï¼Œå°±æ˜¯ä¸€ä¸ªå†…å­˜åŒºï¼ˆç¼“å†²åŒºï¼‰ï¼ŒæŸ¥è¯¢çš„ç»“æœéƒ½åœ¨ç¼“å†²åŒº
+            while(rs.next()){          //5ã€å¤„ç†ç»“æœé›†
+                String encoderPassword = rs.getString(1);
+                System.out.println(encoderPassword);
+                Boolean isSuccecc = MD5.checkpassword(password, encoderPassword);  //å‰ä¸€ä¸ªæ•°æ®æ˜¯æ–‡æœ¬æ¡†ä¸­çš„ï¼Œåä¸€ä¸ªæ•°æ®æ˜¯æ•°æ®åº“ä¸­çš„
+                if (isSuccecc) {
+                    System.out.println("ç™»é™†æˆåŠŸ!");
+                    return true;
+                } else {
+                    System.out.println("ç™»é™†å¤±è´¥!");
+                    return false;
+                }
             }
+
         } catch (SQLException | NoSuchAlgorithmException | UnsupportedEncodingException | ClassNotFoundException e) {
             e.printStackTrace();
         } finally {
             try {
-                rs.close();              //6¡¢¹Ø±ÕÁ´½Ó£¬ÊÍ·Å×ÊÔ´
+                rs.close();              //6ã€å…³é—­é“¾æ¥ï¼Œé‡Šæ”¾èµ„æº
                 stmt.close();
                 conn.close();
             } catch (SQLException e) {
@@ -65,14 +68,14 @@ public class JDBC {
     public Object[][] selectUserInfo() {
 
         java.util.List<Users> list = new ArrayList<Users>();
-        String url = "jdbc:oracle:thin:@120.77.80.134:1521:orcl"; //2¡¢Á¬½ÓÊı¾İ¿â
+        String url = "jdbc:oracle:thin:@120.77.80.134:1521:orcl"; //2ã€è¿æ¥æ•°æ®åº“
         Connection conn = null;
         Statement statement = null;
         String sql = "select * from users";
         try {
-            Class.forName("oracle.jdbc.driver.OracleDriver");   //1¡¢´´½¨Çı¶¯
-            conn = DriverManager.getConnection(url, "scott", "tiger");  //2¡¢Á¬½ÓÊı¾İ¿â
-            statement = conn.createStatement();   //3¡¢´´½¨SQL¶ÔÏó
+            Class.forName("oracle.jdbc.driver.OracleDriver");   //1ã€åˆ›å»ºé©±åŠ¨
+            conn = DriverManager.getConnection(url, "scott", "tiger");  //2ã€è¿æ¥æ•°æ®åº“
+            statement = conn.createStatement();   //3ã€åˆ›å»ºSQLå¯¹è±¡
             rs = statement.executeQuery(sql);
             while (rs.next()) {
                 Users users = new Users();
@@ -85,9 +88,9 @@ public class JDBC {
             e.printStackTrace();
         } finally {
             try {
-                rs.close();  //¹Ø±Õ½á¹û¼¯
-                statement.close();   //¹Ø±ÕSQL¶ÔÏó
-                conn.close();    //¹Ø±ÕÁ¬½Ó
+                rs.close();  //å…³é—­ç»“æœé›†
+                statement.close();   //å…³é—­SQLå¯¹è±¡
+                conn.close();    //å…³é—­è¿æ¥
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -107,7 +110,7 @@ public class JDBC {
     public void addData(int id, String name, String passwd){
         String url="jdbc:oracle:thin:@120.77.80.134:1521:orcl";
         Connection conn=null;
-        String sql="insert into users values(?,?,?)";   // ?ÊÇÕ¼Î»·û
+        String sql="insert into users values(?,?,?)";   // ?æ˜¯å ä½ç¬¦
         PreparedStatement pstmt=null;
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");

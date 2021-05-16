@@ -27,10 +27,10 @@ public class LoginForm extends JFrame {
 
         label1 = new JLabel();
         label2 = new JLabel();
-        textField1 = new JTextField("À¶Ñ©Èğ"); //ÓÃ»§Ãû
-        textField2 = new JTextField("123456"); //ÃÜÂë
-        button1 = new JButton();  //µÇÂ½°´Å¥
-        button2 = new JButton();  //ÖØÖÃ°´Å¥
+        textField1 = new JTextField("è“é›ªç‘"); //ç”¨æˆ·å
+        textField2 = new JTextField("123456"); //å¯†ç 
+        button1 = new JButton();  //ç™»é™†æŒ‰é’®
+        button2 = new JButton();  //é‡ç½®æŒ‰é’®
         JDBC jdbc = new JDBC();
         String username=textField1.getText();
         String password=textField2.getText();
@@ -81,7 +81,7 @@ public class LoginForm extends JFrame {
         setLocationRelativeTo(getOwner());
 
         setVisible(true);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);  //¹Ø±Õ´°¿ÚµÄÊ±ºò¹Ø±Õ½ø³Ì
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);  //å…³é—­çª—å£çš„æ—¶å€™å…³é—­è¿›ç¨‹
 
     }
 
